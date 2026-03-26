@@ -5,12 +5,13 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { Play, Film, X, Video } from 'lucide-react';
+import { Link } from 'react-router';
+import { Button } from '@/components/ui/button';
 
 const Videos = () => {
   const [videos, setVideos] = useState([]);
   const [activeVideo, setActiveVideo] = useState(null);
   const playerRef = useRef(null);
-
   useEffect(() => {
     fetch("http://localhost:3000/videos")
       .then(res => res.json())
@@ -25,10 +26,11 @@ const Videos = () => {
     setActiveVideo(null);
   };
 
-  const getFileName = (url) =>
-    url.split('/').pop().replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
-
-  const getExt = (url) => url.split('.').pop().toUpperCase();
+ const getFileName = (url) => {
+  const fileName = url.split('/').pop().replace(/\.[^/.]+$/, '');
+  return fileName.toLowerCase();
+};
+  const getExt = (url) => url.split('.').pop();
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -109,6 +111,9 @@ const Videos = () => {
                       <p className="text-xs text-muted-foreground mt-0.5">
                         Click to play
                       </p>
+                       <Link to={`/videos/${getFileName(url)}/transcribe`} className="text- text-muted-foreground mt-0.5">
+                       <Button className="m-4 cursor-pointer"> Click to Transcribe</Button>
+                      </Link>
                     </div>
                   </CardFooter>
                 </Card>
