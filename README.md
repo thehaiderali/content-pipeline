@@ -1,4 +1,4 @@
-# Content Pipeline API
+# Content Pipeline 
 
 A complete video processing platform with transcription and subtitle overlay capabilities.
 
